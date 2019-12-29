@@ -9,18 +9,25 @@ const collection = "user";
 const bcrypt = require('bcrypt')
 const saltRounds=10
 module.exports = app;
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
+const secret = 'mysecretsshhh';
 
+app.use(cookieParser());
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// get content form project table
-app.get('/project', (req, res) => {
+
+app.get('/api/project', (req, res) => {
+    console.log("TRTYU");
     db.getDB().collection("projects").find({}).toArray((err, documents) => {
-        if (err)
-            console.log(err);
+        if (err) {
+        console.log("ytrtyu");
+            console.log(err);}
         else {
+            console.log("REFER");
             console.log(documents);
             res.json(documents);
         }
@@ -65,6 +72,7 @@ app.post('/api/Componentfrom', (req, res) => {
 
 // Sign in check user is present if yes then login
 app.post('/api/Login', (req, res) => {
+    console.log("ereeer1");
     var data = req.body
     // var doc = {
     //     email: data.email,
@@ -89,11 +97,46 @@ app.post('/api/Login', (req, res) => {
         }   
     });
 });
-app.post('/api/Check', (req, res) => {
-
+app.post('/api/design_need', (req, res) => {
     var data = req.body
     console.log(data);
+    var doc = [{
+        statement: data.projectStatement,
+        stakeholders: data.stakeholders,
+        information: data.information,
+        informationgathering: informationgathering,
+        file: data.file,
+        designBrief:data.designBrief,
+        Review:data.Review
+    }];
+    db.getDB().collection("Design_need").insertMany(doc, (err, result) => {
+        if (err)
+            console.log(err);
+        else
+            res.json('data inserted');
+            
+    })
 });
+// app.post('/api/project_planning, (req, res) => {
+//     var data = req.body
+//     console.log(data);
+//     var doc = [{
+//         statement: data.projectStatement,
+//         stakeholders: data.stakeholders,
+//         information: data.information,
+//         informationgathering: informationgathering,
+//         file: data.file,
+//         designBrief:data.designBrief,
+//         Review:data.Review
+//     }];
+//     db.getDB().collection("Design_need").insertMany(doc, (err, result) => {
+//         if (err)
+//             console.log(err);
+//         else
+//             res.json('data inserted');
+            
+//     })
+// });
 // app.delete('/:id', (req, res) => {
 //     const todoID = req.params.id;
 //     console.log(todoID);
