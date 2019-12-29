@@ -31,7 +31,7 @@
     "express": "^4.15.4",
     "jsonwebtoken": "^7.4.3",
     "lodash": "^4.17.15",
-    "mongoose": "^4.13.14",
+    "mongoose": "^5.7.5",
     "mongoose-unique-validator": "^1.0.5",
     "nodemailer": "^4.1.0",
     "request-promise": "^4.2.2",
